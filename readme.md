@@ -48,8 +48,9 @@ In terms of testing I did while writing the script, I simply ran it end to end p
 
 Testing plan:
 
-1. Write static email datasets as json files. Test boundaries - lots of emails, emails with no subject, emails with no variants, non-ASCII names, etc. As weird as possible that's still feasible.
-2. Write expected output reports as .txt files. One per json input.
-3. Modify script to optionally take input from a target .json files instead of HTTP. Maybe this could be a flag somewhere.
-4. Create test program which runs the script once per .json file, diffs the output with the corresponding .txt file, and logs something sensible like "Test case passed: non-ASCII names" or "Test case failed: non-ASCII names" and then the diff.
-   It is possible there is a library that makes the above easy. Probably step 0 is see if such a library exists, and if so learn it.
+1. Write .json files to serve as test inputs to the script. Do boundary tests - lots of emails, emails with no subject, emails with no variants, non-ASCII names, etc. As weird as possible that's still feasible.
+2. For each input .json, write an output .txt representing the expected report.
+3. Modify script to optionally take input from a target .json instead of from HTTP. Maybe this could be a flag somewhere.
+4. Create a test program that runs the script once per .json file, diffs the output with the corresponding .txt file, and logs something sensible like "Test case passed: non-ASCII names" or "Test case failed: non-ASCII names" and then the diff.
+
+It is possible there is a library that makes the above easy or otherwise reduces the work. No need to reinvent the wheel, so probably step 0 is see if such a library exists, and if so learn it. Right now I don't know about it.
