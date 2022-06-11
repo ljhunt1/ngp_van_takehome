@@ -120,7 +120,7 @@ const getEmailVariantById = async (id: number, variantId: number) => {
 
 // Given an email with stats, compute the top variant and store its name
 // in email.statistics.topVariant. Return email. Note this mutates the input
-// Note too this sends several GET requests for variant statistics
+// Note too this sends several GET requests
 const computeTopVariant = async (email: EmailWithStatistics) => {
   // Parallel GET requests for variant stats
   const variantStatistics = await Promise.all(
@@ -172,17 +172,13 @@ const makeReport = (emails: EmailWithStatistics[]): string => {
 getEmailsAllPages()
   // For each ID found, get statistics. Promise.all sends several async GET requests in parallel
   .then(async (emails: Email[]) => {
-    console.log(emails);
     return await Promise.all(emails.map((e) => getEmailById(e.emailMessageId)));
   })
   // Compute the top variant for each email
   .then(async (emailsWithStats: EmailWithStatistics[]) => {
-    console.log(emailsWithStats);
     return await Promise.all(emailsWithStats.map(computeTopVariant));
   })
   .then((emailsWithStats: EmailWithStatistics[]) => {
     const report = makeReport(emailsWithStats);
     writeFileSync(OUTPUT_FILE, report, "utf-8");
   });
-
-//TODO clean up the repo, make commits, do the readme for setup instructions and answer questions
